@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Veiculos.Api/Veiculos.Api.csproj" Id="35f13064-1084-42dc-ad99-0266a5310edd" />
+  <Project Path="Veiculos.Application/Veiculos.Application.csproj" Id="6d6ed0a8-7923-4b6b-986c-36712a480245" />
+  <Project Path="Veiculos.Domain/Veiculos.Domain.csproj" Id="feb52200-0f05-4abf-87c4-8c8a87a42e7c" />
+  <Project Path="Veiculos.Infra/Veiculos.Infra.csproj" Id="1c12f44a-4c08-403d-bc44-f66857faf5b4" />
+</Solution>
