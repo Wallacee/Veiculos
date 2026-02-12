@@ -17,7 +17,7 @@ public class AdicionarUsuarioCommandHandler : IRequestHandler<AdicionarUsuarioCo
     {
         var existe = await _usuarioService.ObterPorLoginAsync(request.Login);
         
-        if (existe is null)
+        if (existe is not null)
             throw new InvalidOperationException("Login já cadastrado");
         
         var hash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
