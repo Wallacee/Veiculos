@@ -53,11 +53,13 @@ Infra | Persistência e autenticação |
 
 # 📂 Estrutura do Projeto
 
-src/
-├── Veiculos.WebApi → Controllers + Configurações
-├── Veiculos.Application → Commands, Queries, Services
-├── Veiculos.Domain → Entidades e Interfaces
-└── Veiculos.Infra → EF Core, JWT e Seed
+| Pasta | Responsabilidade |
+|------|------|
+| `Veiculos.WebApi` | Controllers e configurações da API |
+| `Veiculos.Application` | Commands, Queries e Services (casos de uso) |
+| `Veiculos.Domain` | Entidades e interfaces do domínio |
+| `Veiculos.Infra` | Persistência EF Core, JWT e Seed |
+
 
 
 ---
@@ -157,7 +159,7 @@ Executar API | `dotnet run --project Veiculos.WebApi` |
 
 ## Acessar Swagger
 
-https://localhost:xxxx/swagger
+http://localhost:xxxx/swagger
 
 
 ---
