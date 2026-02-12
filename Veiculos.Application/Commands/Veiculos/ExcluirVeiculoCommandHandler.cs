@@ -1,31 +1,21 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Veiculos.Application.Interfaces;
 using Veiculos.Domain.Interfaces;
 
 namespace Veiculos.Application.Commands.Veiculos;
 
 public class ExcluirVeiculoCommandHandler : IRequestHandler<ExcluirVeiculoCommand, Unit>
 {
-    private readonly IVeiculoRepository _veiculoRepository;
+    private readonly IVeiculoService _service;
 
-    public ExcluirVeiculoCommandHandler(IVeiculoRepository veiculoRepository)
+    public ExcluirVeiculoCommandHandler(IVeiculoService service)
     {
-        _veiculoRepository = veiculoRepository;
+        _service = service;
     }
 
     public async Task<Unit> Handle(ExcluirVeiculoCommand request, CancellationToken cancellationToken)
     {
-        var veiculo = await _veiculoRepository.ObterPorIdAsync(request.Id);
-
-        if (veiculo is null)
-            throw new KeyNotFoundException("Veículo não encontrado");
-
-        await _veiculoRepository.RemoverAsync(veiculo);
-
+        await _service.RemoverAsync(request.Id);
         return Unit.Value;
     }
 }

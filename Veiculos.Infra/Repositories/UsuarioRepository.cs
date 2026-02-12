@@ -34,5 +34,11 @@ public class UsuarioRepository : IUsuarioRepository
     {
         return await _context.Usuarios.AnyAsync(usuario => usuario.Login == login);
     }
+
+    public async Task<IEnumerable<Usuario>> ListarAsync()
+    {
+        return await _context.Usuarios.ToListAsync();
+    }
+
 }
 

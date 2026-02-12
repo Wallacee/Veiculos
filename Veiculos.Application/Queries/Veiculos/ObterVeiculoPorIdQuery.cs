@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Veiculos.Domain.Entities;
+using Veiculos.Application.DTOs;
 
 namespace Veiculos.Application.Queries.Veiculos;
 
-public record ObterVeiculoPorIdQuery(Guid Id) : IRequest<Veiculo?>;
+public record ObterVeiculoPorIdQuery(Guid Id) : IRequest<VeiculoResponseDto?>;

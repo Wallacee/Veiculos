@@ -1,20 +1,35 @@
 ﻿using MediatR;
+using Veiculos.Application.DTOs;
+using Veiculos.Application.Interfaces;
 using Veiculos.Domain.Entities;
-using Veiculos.Domain.Interfaces;
 
 namespace Veiculos.Application.Queries.Veiculos;
 
-public class ObterVeiculoPorIdQueryHandler : IRequestHandler<ObterVeiculoPorIdQuery, Veiculo?>
+public class ObterVeiculoPorIdQueryHandler : IRequestHandler<ObterVeiculoPorIdQuery, VeiculoResponseDto?>
 {
-    private readonly IVeiculoRepository _veiculoRepository;
+    private readonly IVeiculoService _service;
 
-    public ObterVeiculoPorIdQueryHandler(IVeiculoRepository veiculoRepository)
+
+    public ObterVeiculoPorIdQueryHandler(IVeiculoService service)
     {
-        _veiculoRepository = veiculoRepository;
+        _service = service;
     }
 
-    public async Task<Veiculo?> Handle(ObterVeiculoPorIdQuery request, CancellationToken cancellationToken)
+    public async Task<VeiculoResponseDto?> Handle(ObterVeiculoPorIdQuery request, CancellationToken cancellationToken)
     {
-        return await _veiculoRepository.ObterPorIdAsync(request.Id);
+        var veiculo = await _service.ObterPorIdAsync(request.Id);
+
+        if (veiculo is null)
+            return null;
+
+        return new VeiculoResponseDto()
+        {
+            Id = veiculo.Id,
+            Descricao = veiculo.Descricao,
+            Marca = (int)veiculo.Marca,
+            MarcaNome = veiculo.Marca.ToString(),
+            Modelo = veiculo.Modelo,
+            Valor = veiculo.Valor
+        };
     }
 }

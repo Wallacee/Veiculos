@@ -1,7 +1,7 @@
 ﻿using Veiculos.Domain.Entities;
 using Veiculos.Domain.Enum;
 
-namespace Veiculos.Application.Services
+namespace Veiculos.Application.Interfaces
 {
     public interface IVeiculoService
     {

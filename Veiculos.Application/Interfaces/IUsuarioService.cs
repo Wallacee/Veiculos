@@ -1,6 +1,6 @@
 ﻿using Veiculos.Domain.Entities;
 
-namespace Veiculos.Application.Services
+namespace Veiculos.Application.Interfaces
 {
     public interface IUsuarioService
     {
@@ -9,5 +9,7 @@ namespace Veiculos.Application.Services
         Task<Usuario?> ObterPorIdAsync(Guid id);
 
         Task<Usuario?> ObterPorLoginAsync(string login);
+
+        Task<IEnumerable<Usuario>> ListarAsync();
     }
 }

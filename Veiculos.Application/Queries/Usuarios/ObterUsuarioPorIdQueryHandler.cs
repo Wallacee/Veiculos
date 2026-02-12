@@ -1,20 +1,30 @@
 ﻿using MediatR;
-using Veiculos.Domain.Entities;
-using Veiculos.Domain.Interfaces;
+using Veiculos.Application.DTOs;
+using Veiculos.Application.Interfaces;
 
 namespace Veiculos.Application.Queries.Usuarios;
 
-public class ObterUsuarioPorIdQueryHandler : IRequestHandler<ObterUsuarioPorIdQuery, Usuario?>
+public class ObterUsuarioPorIdQueryHandler : IRequestHandler<ObterUsuarioPorIdQuery, UsuarioResponseDto?>
 {
-    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IUsuarioService _usuarioService;
 
-    public ObterUsuarioPorIdQueryHandler(IUsuarioRepository usuarioRepository)
+    public ObterUsuarioPorIdQueryHandler(IUsuarioService usuarioService)
     {
-        _usuarioRepository = usuarioRepository;
+        _usuarioService = usuarioService;
     }
 
-    public async Task<Usuario?> Handle(ObterUsuarioPorIdQuery request, CancellationToken cancellationToken)
+    public async Task<UsuarioResponseDto?> Handle(ObterUsuarioPorIdQuery request, CancellationToken cancellationToken)
     {
-        return await _usuarioRepository.ObterPorIdAsync(request.Id);
+        var usuario = _usuarioService.ObterPorIdAsync(request.Id);
+        
+        if (usuario is null)
+            return null;
+
+        return new UsuarioResponseDto()
+        {
+            Id = usuario.Result.Id,
+            Login = usuario.Result.Login,
+            Nome = usuario.Result.Nome
+        };
     }
 }

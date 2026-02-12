@@ -3,12 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Veiculos.Application.Services;
+using Veiculos.Application.Interfaces;
 using Veiculos.Infra.Configurations;
 
 namespace Veiculos.Infra.Services;
 
-public class JwtAuthService : IAuthService
+public class JwtAuthService : ITokenService
 {
     private readonly JwtSettings _settings;
 

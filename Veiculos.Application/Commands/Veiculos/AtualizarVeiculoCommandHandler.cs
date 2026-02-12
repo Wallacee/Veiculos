@@ -1,27 +1,26 @@
 ﻿using MediatR;
+using Veiculos.Application.Interfaces;
 using Veiculos.Domain.Interfaces;
 
 namespace Veiculos.Application.Commands.Veiculos;
 
 public class AtualizarVeiculoCommandHandler : IRequestHandler<AtualizarVeiculoCommand, Unit>
 {
-    private readonly IVeiculoRepository _veiculoRepository;
+    private readonly IVeiculoService _service;
 
-    public AtualizarVeiculoCommandHandler(IVeiculoRepository veiculoRepository)
+    public AtualizarVeiculoCommandHandler(IVeiculoService service)
     {
-        _veiculoRepository = veiculoRepository;
+        _service = service;
     }
 
     public async Task<Unit> Handle(AtualizarVeiculoCommand request, CancellationToken cancellationToken)
     {
-        var veiculo = await _veiculoRepository.ObterPorIdAsync(request.Id);
-
-        if (veiculo is null)
-            throw new KeyNotFoundException("Veículo não encontrado");
-
-        veiculo.Atualizar(request.Descricao, request.Marca, request.Modelo, request.Valor);
-
-        await _veiculoRepository.AtualizarAsync(veiculo);
+        await _service.AtualizarAsync(
+            request.Id,
+            request.Descricao,
+            request.Marca,
+            request.Modelo,
+            request.Valor);
 
         return Unit.Value;
     }

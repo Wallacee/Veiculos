@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Veiculos.Application.Interfaces;
 using Veiculos.Domain.Entities;
 using Veiculos.Domain.Interfaces;
 
@@ -6,11 +7,11 @@ namespace Veiculos.Application.Commands.Veiculos;
 
 public class AdicionarVeiculoCommandHandler : IRequestHandler<AdicionarVeiculoCommand, Veiculo>
 {
-    private readonly IVeiculoRepository _veiculoRepository;
+    private readonly IVeiculoService _service;
 
-    public AdicionarVeiculoCommandHandler(IVeiculoRepository veiculoRepository)
+    public AdicionarVeiculoCommandHandler(IVeiculoService service)
     {
-        _veiculoRepository = veiculoRepository;
+        _service = service;
     }
 
     public async Task<Veiculo> Handle(AdicionarVeiculoCommand request, CancellationToken cancellationToken)
@@ -22,8 +23,8 @@ public class AdicionarVeiculoCommandHandler : IRequestHandler<AdicionarVeiculoCo
             request.Valor
         );
 
-        await _veiculoRepository.AdicionarAsync(veiculo);
+        return await _service.AdicionarAsync(request.Descricao, request.Marca, request.Modelo, request.Valor);
 
-        return veiculo;
+        
     }
 }

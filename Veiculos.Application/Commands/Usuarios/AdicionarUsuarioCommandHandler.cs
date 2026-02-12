@@ -1,36 +1,28 @@
 ﻿using MediatR;
+using Veiculos.Application.Interfaces;
 using Veiculos.Domain.Entities;
-using Veiculos.Domain.Interfaces;
 
 namespace Veiculos.Application.Commands.Usuarios;
 
 public class AdicionarUsuarioCommandHandler : IRequestHandler<AdicionarUsuarioCommand, Usuario>
 {
-    private readonly IUsuarioRepository _usuarioRepository;
+    private readonly IUsuarioService _usuarioService;
 
-    public AdicionarUsuarioCommandHandler(IUsuarioRepository usuarioRepository)
+    public AdicionarUsuarioCommandHandler(IUsuarioService usuarioService)
     {
-        _usuarioRepository = usuarioRepository;
+        _usuarioService = usuarioService;
     }
 
     public async Task<Usuario> Handle(AdicionarUsuarioCommand request, CancellationToken cancellationToken)
     {
+        var existe = await _usuarioService.ObterPorLoginAsync(request.Login);
         
-        var existe = await _usuarioRepository.ExisteLoginAsync(request.Login);
-        
-        if (existe)
+        if (existe is null)
             throw new InvalidOperationException("Login já cadastrado");
-
         
         var hash = BCrypt.Net.BCrypt.HashPassword(request.Senha);
 
-        
-        var usuario = new Usuario(request.Nome, request.Login, hash);
-
-        
-        await _usuarioRepository.AdicionarAsync(usuario);
-
-        return usuario;
+        return await _usuarioService.AdicionarAsync(request.Nome, request.Login,hash);   
     }
 }
 

@@ -8,5 +8,6 @@ namespace Veiculos.Domain.Interfaces
         Task<Usuario?> ObterPorIdAsync(Guid id);
         Task<Usuario?> ObterPorLoginAsync(string login);
         Task<bool> ExisteLoginAsync(string login);
+        Task<IEnumerable<Usuario>> ListarAsync();
     }
 }

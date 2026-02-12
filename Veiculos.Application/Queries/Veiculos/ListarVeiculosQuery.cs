@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Veiculos.Domain.Entities;
+using Veiculos.Application.DTOs;
 
 namespace Veiculos.Application.Queries.Veiculos;
 
-public record ListarVeiculosQuery() : IRequest<IEnumerable<Veiculo>>;
+public record ListarVeiculosQuery() : IRequest<IEnumerable<VeiculoResponseDto>>;
 
